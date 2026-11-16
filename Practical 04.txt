@@ -1,0 +1,154 @@
+Practical 04
+
+#4.1
+
+Aim :To implement C++ programs for Factory Design Pattern, Singleton Design
+Pattern, and Strategy Design Pattern.
+
+//A. Factory Design Pattern
+#include <iostream>
+using namespace std;
+// Base class
+class Vehicle
+{
+public:
+    virtual void show()
+    {
+        cout << "Vehicle" << endl;
+    }
+    virtual ~Vehicle() {}
+};
+// Derived class Car
+class Car : public Vehicle
+{
+public:
+    void show()
+    {
+        cout << "Car is created" << endl;
+    }
+};
+// Derived class Bike
+class Bike : public Vehicle
+{
+public:
+    void show()
+    {
+        cout << "Bike is created" << endl;
+    }
+};
+// Factory class
+class VehicleFactory
+{
+public:
+    static Vehicle* createVehicle(int choice)
+    {
+        if (choice == 1)
+            return new Car();
+        else
+            return new Bike();
+    }
+};
+int main()
+{
+    Vehicle *v;
+    v = VehicleFactory::createVehicle(1);
+    v->show();
+    delete v;
+    return 0;
+}
+
+
+#4.2
+
+#include <iostream>
+using namespace std;
+class Singleton
+{
+private:
+    static Singleton *object;
+    Singleton()
+    {
+        cout << "Singleton object created" << endl;
+    }
+public:
+    static Singleton* getInstance()
+    {
+        if (object == nullptr)
+        {
+            object = new Singleton();
+        }
+        return object;
+    }
+    void show()
+    {
+        cout << "Only one object is used." << endl;
+    }
+};
+Singleton* Singleton::object = nullptr;
+int main()
+{
+    Singleton *s1 = Singleton::getInstance();
+    Singleton *s2 = Singleton::getInstance();
+    s1->show();
+    if (s1 == s2)
+    {
+        cout << "Both are the same object." << endl;
+    }
+    return 0;
+}
+
+#4.3
+
+//C. Strategy Design Pattern
+#include <iostream>
+using namespace std;
+// Abstract Strategy class
+class Strategy
+{
+public:
+    virtual void calculate(int a, int b) = 0;
+    virtual ~Strategy() {}
+};
+// Addition Strategy
+class Add : public Strategy
+{
+public:
+    void calculate(int a, int b)
+    {
+        cout << "Addition = " << a + b << endl;
+    }
+};
+// Subtraction Strategy
+class Subtract : public Strategy
+{
+public:
+    void calculate(int a, int b)
+    {
+        cout << "Subtraction = " << a - b << endl;
+    }
+};
+// Context class
+class Context
+{
+private:
+    Strategy *strategy;
+public:
+    Context(Strategy *s)
+    {
+        strategy = s;
+    }
+    void execute(int a, int b)
+    {
+        strategy->calculate(a, b);
+    }
+};
+int main()
+{
+    Add add;
+    Context c1(&add);
+    c1.execute(10, 5);
+    Subtract sub;
+    Context c2(&sub);
+    c2.execute(10, 5);
+    return 0;
+}

@@ -1,0 +1,94 @@
+Practical 08
+
+To implement Bresenham’s line drawing algorithm and Cohen–Sutherland line clipping
+algorithm for graphical applications
+
+#8.1
+
+#include <graphics.h>
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main()
+{
+    int gd=DETECT, gm;
+    initgraph(&gd,&gm,"");
+
+    int x1=100, y1=100, x2=300, y2=200;
+    int dx=abs(x2-x1), dy=abs(y2-y1);
+    int p=2*dy-dx;
+
+    for(int i=0; i<=dx; i++)
+    {
+        putpixel(x1,y1,WHITE);
+
+        if(p>=0)
+        {
+            y1++;
+            p-=2*dx;
+        }
+
+        x1++;
+        p+=2*dy;
+    }
+
+    getch();
+    closegraph();
+    return 0;
+}
+
+
+#8.2
+
+#include <graphics.h>
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int gd=DETECT, gm;
+    initgraph(&gd,&gm,"");
+
+    int x1=50, y1=50, x2=300, y2=250;
+    int xmin=100, ymin=100, xmax=250, ymax=200;
+
+    float x, y;
+
+    while(true)
+    {
+        int c1=(x1<xmin?1:0)|(x1>xmax?2:0)|
+               (y1<ymin?4:0)|(y1>ymax?8:0);
+
+        int c2=(x2<xmin?1:0)|(x2>xmax?2:0)|
+               (y2<ymin?4:0)|(y2>ymax?8:0);
+
+        if(!(c1|c2))
+        {
+            setcolor(RED);
+            rectangle(xmin,ymin,xmax,ymax);
+            line(x1,y1,x2,y2);
+            break;
+        }
+
+        if(c1&c2) break;
+
+        int c=c1?c1:c2;
+
+        if(c&8)
+            x=x1+(x2-x1)*(ymax-y1)/(float)(y2-y1), y=ymax;
+        else if(c&4)
+            x=x1+(x2-x1)*(ymin-y1)/(float)(y2-y1), y=ymin;
+        else if(c&2)
+            y=y1+(y2-y1)*(xmax-x1)/(float)(x2-x1), x=xmax;
+        else
+            y=y1+(y2-y1)*(xmin-x1)/(float)(x2-x1), x=xmin;
+
+        if(c==c1) x1=x, y1=y;
+        else x2=x, y2=y;
+    }
+
+    getch();
+    closegraph();
+    return 0;
+}

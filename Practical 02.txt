@@ -1,0 +1,56 @@
+Practical 02
+
+Title : To Demonstrate Single, Multilevel, and Hierarchical Inheritance and Runtime
+Polymorphism Using Virtual Functions in C++
+Aim To implement a C++ program to demonstrate single inheritance, multilevel inheritance,
+hierarchical inheritance, and runtime polymorphism using virtual functions
+
+#include <iostream>
+using namespace std;
+class Animal
+{
+public:
+    virtual void sound()
+    {
+        cout << "Animal makes a sound" << endl;
+    }
+};
+class Dog : public Animal
+{
+public:
+    void sound()
+    {
+        cout << "Dog barks" << endl;
+    }
+};
+class Puppy : public Dog
+{
+public:
+    void sound()
+    {
+        cout << "Puppy barks" << endl;
+    }
+};
+class Cat : public Animal
+{
+public:
+    void sound()
+    {
+        cout << "Cat meows" << endl;
+    }
+};
+int main()
+{
+    Dog d;
+    Puppy p;
+    Cat c;
+    d.sound();
+    p.sound();
+    c.sound();
+    Animal *ptr;
+    ptr = &d;
+    ptr->sound();
+    ptr = &c;
+    ptr->sound();
+    return 0;
+}

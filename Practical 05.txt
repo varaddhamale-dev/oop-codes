@@ -1,0 +1,19 @@
+Practical 05
+
+Aim To initialize a graphics window and draw basic shapes such as line, circle, and
+rectangle using C++ graphics programming.
+
+
+#include <graphics.h>
+#include <conio.h>
+int main()
+{
+initwindow(800, 600, "Basic Graphics");
+line(100, 100, 300, 100);
+circle(200, 250, 80);
+rectangle(400, 150, 650, 300);
+getch();
+closegraph();
+return 0;
+}
+

@@ -1,0 +1,49 @@
+Practical 07
+
+Aim- To implement 3D transformations (rotation, scaling, and translation) and visualize
+transformed objects
+
+
+#include <iostream>
+#include <cmath>
+using namespace std;
+int main()
+{
+    float x, y, z;
+    float tx, ty, tz;
+    float sx, sy, sz;
+    float angle, rad;
+    float xr, yr, zr;
+    // Original point of a 3D object
+    cout << "Enter point (x y z): ";
+    cin >> x >> y >> z;
+    // Translation
+    cout << "Enter translation (tx ty tz): ";
+    cin >> tx >> ty >> tz;
+    // Scaling
+    cout << "Enter scaling factors (sx sy sz): ";
+    cin >> sx >> sy >> sz;
+    // Rotation about Z-axis
+    cout << "Enter rotation angle in degrees: ";
+    cin >> angle;
+    rad = angle * 3.14159 / 180.0;
+    // Display original point
+    cout << "\nOriginal Point: ("
+         << x << ", " << y << ", " << z << ")" << endl;
+    // Apply translation
+    x = x + tx;
+    y = y + ty;
+    z = z + tz;
+    // Apply scaling
+    x = x * sx;
+    y = y * sy;
+    z = z * sz;
+    // Apply rotation about Z-axis
+    xr = x * cos(rad) - y * sin(rad);
+    yr = x * sin(rad) + y * cos(rad);
+    zr = z;
+    // Display transformed point
+    cout << "\nTransformed Point: ("
+         << xr << ", " << yr << ", " << zr << ")" << endl;
+    return 0;
+}
